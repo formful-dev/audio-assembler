@@ -14,8 +14,7 @@ RATE = 16000
 
 @pytest.fixture
 def window(tmp_path, monkeypatch):
-    monkeypatch.setenv("APPDATA", str(tmp_path / "appdata"))
-    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "appdata"))
+    monkeypatch.setenv("AUDIO_ASSEMBLER_CONFIG_DIR", str(tmp_path / "settings"))
     from audio_assembler.gui import app as gui_app
     from audio_assembler.gui.main_window import MainWindow
     qapp = QtWidgets.QApplication.instance() or QtWidgets.QApplication([])

@@ -12,6 +12,8 @@ from ..core.settings import Settings
 
 
 def config_dir() -> Path:
+    if os.environ.get("AUDIO_ASSEMBLER_CONFIG_DIR"):  # used by the tests
+        return Path(os.environ["AUDIO_ASSEMBLER_CONFIG_DIR"])
     if sys.platform == "win32":
         base = Path(os.environ.get("APPDATA") or Path.home() / "AppData" / "Roaming")
         return base / "Audio Assembler"
