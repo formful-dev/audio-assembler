@@ -1,0 +1,43 @@
+Audio Assembler - third-party software
+=====================================
+
+Audio Assembler itself is released under the MIT License (Audio-Assembler-MIT.txt).
+The Windows application also contains the following separate open-source components.
+Each keeps its own license. Full license texts are in this folder.
+
+
+1. FFmpeg (audio engine)
+   Files:    _internal\ffmpeg\ffmpeg.exe and the av*.dll / sw*.dll files next to it
+   Version:  n9.0.2-57-gd838f9f9ae, Windows x64, "lgpl-shared" build
+   License:  GNU Lesser General Public License, version 3 or later (LGPL-3.0.txt, GPL-3.0.txt).
+             This build contains no GPL-only or non-free parts.
+   Source:   https://git.ffmpeg.org/ffmpeg.git  (commit d838f9f9ae)
+   Build:    https://github.com/BtbN/FFmpeg-Builds  (release autobuild-2026-11-17-12-40);
+             the build scripts list every library compiled into these files, with its source.
+   Audio Assembler runs ffmpeg.exe as a separate program. You may replace the files in
+   _internal\ffmpeg with your own build of the same FFmpeg version.
+
+   The FFmpeg libraries in this build include the LAME MP3 encoder (LGPL-2.0-or-later,
+   https://lame.sourceforge.io) and other open-source libraries named in the build scripts above.
+
+2. Qt 6 and Qt for Python (PySide6, Shiboken6) 6.12.0 (window toolkit)
+   Files:    _internal\PySide6\*, _internal\shiboken6\*
+   License:  GNU Lesser General Public License, version 3 (LGPL-3.0.txt, GPL-3.0.txt)
+   Source:   https://code.qt.io  and  https://download.qt.io/official_releases/QtForPython/
+   The Qt libraries are separate DLL files and may be replaced with compatible versions.
+
+3. Python 3.14 runtime
+   License:  Python Software Foundation License (Python-PSF.txt)
+   Source:   https://www.python.org
+
+4. NumPy 2.5.5
+   License:  BSD 3-Clause, plus the licenses of its bundled parts (NumPy folder)
+   Source:   https://numpy.org
+
+5. PyInstaller bootloader
+   License:  GPL 2.0 with the PyInstaller bootloader exception, which allows use in any
+             program (PyInstaller-COPYING.txt)
+   Source:   https://pyinstaller.org
+
+6. Microsoft Visual C++ runtime files (vcruntime140*.dll, msvcp140*.dll)
+   Redistributed under the Microsoft Visual Studio redistribution terms.

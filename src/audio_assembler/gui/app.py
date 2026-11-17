@@ -51,7 +51,7 @@ def run(argv: list[str] | None = None) -> int:
     app.setApplicationName(APP_NAME)
     app.setStyle("Fusion")
     app.setStyleSheet(STYLE)
-    app.setWindowIcon(QIcon(str(RESOURCES / "icon.svg")))
+    app.setWindowIcon(QIcon(str(RESOURCES / "icon.png")))
 
     from .main_window import MainWindow
     window = MainWindow()
