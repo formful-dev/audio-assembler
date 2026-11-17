@@ -18,8 +18,14 @@ dev = ["pytest>=7"]
 [project.scripts]
 audio-assembler = "audio_assembler.cli:main"
 
+[project.gui-scripts]
+audio-assembler-gui = "audio_assembler.gui:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"audio_assembler.gui" = ["resources/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
