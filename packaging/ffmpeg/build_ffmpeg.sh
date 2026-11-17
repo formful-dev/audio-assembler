@@ -11,7 +11,7 @@
 set -euo pipefail
 
 FFMPEG_VERSION=9.0.2
-FFMPEG_SHA256=""   # filled in after the first verified download; empty = print only
+FFMPEG_SHA256=8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e
 LAME_VERSION=3.100
 LAME_SHA256=ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e
 HOST=x86_64-w64-mingw32
