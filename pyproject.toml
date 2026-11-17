@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "audio-assembler"
-version = "0.1.0"
+version = "0.1.1"
 description = "Cut two audio files at long silences and join the pieces in the order given by a CSV list."
 readme = "README.md"
 license = "MIT"

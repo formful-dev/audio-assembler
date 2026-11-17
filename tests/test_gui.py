@@ -44,18 +44,21 @@ def wait(window, timeout_ms=60000):
 
 
 def test_single_lesson_fills_partners_and_labels(window, tmp_path):
-    make_lesson(tmp_path)
-    window.field_a.set_path(str(tmp_path / "L1_LV.wav"))
+    tmp_path = tmp_path / "Latviešu kursi ā č ē ģ ī ķ ļ ņ š ū ž"   # letters and spaces in the folder name
+    tmp_path.mkdir()
+    base = "S1-M01-L01 Ābolu stāsts"
+    make_lesson(tmp_path, base)
+    window.field_a.set_path(str(tmp_path / f"{base}_LV.wav"))
     # Choosing one file finds the other two and fills the labels.
-    assert window.field_b.path().endswith("L1_EN.wav")
-    assert window.field_order.path().endswith("L1_ORDER.csv")
+    assert window.field_b.path().endswith(f"{base}_EN.wav")
+    assert window.field_order.path().endswith(f"{base}_ORDER.csv")
     assert (window.field_a.label_edit.text(), window.field_b.label_edit.text()) == ("LV", "EN")
     window.format_combo.setCurrentIndex(window.format_combo.findData("wav"))
     window.assemble_btn.click()
     wait(window)
     wait(window)
-    assert (tmp_path / "L1_FINAL.wav").is_file()
-    assert (tmp_path / "L1_FINAL_report.txt").is_file()
+    assert (tmp_path / f"{base}_FINAL.wav").is_file()
+    assert (tmp_path / f"{base}_FINAL_report.txt").is_file()
     assert "Done." in window.result.toPlainText()
     window.grab().save(str(tmp_path / "window.png"))
 
@@ -129,3 +132,23 @@ def test_settings_are_remembered(window, tmp_path):
     window.close()
     st = load_state()
     assert st.settings.min_cut_seconds == 3.5 and st.settings.match_loudness and st.mode == "folder"
+
+
+def test_folders_are_remembered(window, tmp_path):
+    from audio_assembler.gui.main_window import MainWindow
+    lessons = tmp_path / "Mani kursi ā"
+    lessons.mkdir()
+    make_lesson(lessons)
+    out = tmp_path / "Gatavie faili"
+    out.mkdir()
+    window.field_a.set_path(str(lessons / "L1_LV.wav"))
+    window.field_out.set_path(str(out))
+    window.close()
+    again = MainWindow()   # a new start of the app
+    try:
+        assert again.state.last_dir == str(lessons)              # where Browse… opens
+        assert again.field_a.start_dir() == str(lessons)
+        assert again.field_out.path() == str(out)                # Save to folder
+        assert again.cut_auto.isChecked()
+    finally:
+        again.close()

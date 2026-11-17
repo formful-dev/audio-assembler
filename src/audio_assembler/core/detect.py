@@ -79,9 +79,16 @@ class Detection:
 def frame_levels(mono: np.ndarray, rate: int) -> tuple[np.ndarray, int]:
     hop = max(1, round(rate * FRAME_SECONDS))
     n = math.ceil(len(mono) / hop)
-    padded = np.zeros(n * hop, dtype=np.float64)
-    padded[:len(mono)] = mono
-    power = (padded.reshape(n, hop) ** 2).mean(axis=1)
+    full = len(mono) // hop
+    power = np.empty(n, dtype=np.float64)
+    step = 1 << 15  # frames per block: keeps memory use small for long files
+    for i in range(0, full, step):
+        j = min(i + step, full)
+        block = mono[i * hop:j * hop].reshape(-1, hop).astype(np.float64)
+        power[i:j] = np.einsum("ij,ij->i", block, block) / hop
+    if full < n:  # last partial frame, padded with silence
+        tail = mono[full * hop:].astype(np.float64)
+        power[full] = float(tail @ tail) / hop
     return 10.0 * np.log10(np.maximum(power, 1e-12)), hop
 
 

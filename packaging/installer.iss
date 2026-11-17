@@ -2,7 +2,7 @@
 ; Build with packaging\build_windows.ps1 (or: ISCC.exe /DAppVersion=0.1.0 packaging\installer.iss)
 
 #ifndef AppVersion
-  #define AppVersion "0.1.0"
+  #define AppVersion "0.1.1"
 #endif
 #define AppName "Audio Assembler"
 #define AppExe "Audio Assembler.exe"

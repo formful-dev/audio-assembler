@@ -51,6 +51,28 @@ def test_batch_skip_warnings(tmp_path):
     assert r.status == "skipped" and not (tmp_path / "L1_FINAL.wav").exists()
 
 
+def test_batch_with_dashes_latvian_letters_and_spaces(tmp_path):
+    """Names like S1-M01-L01, Latvian letters and spaces in folder and file names. The command line must
+    not crash when its output goes to a file that uses an old code page."""
+    import subprocess
+    import sys
+    folder = tmp_path / "Latviešu kursi ā č ē ģ ī ķ ļ ņ š ū ž"
+    folder.mkdir()
+    make_set(folder, "S1-M01-L01")
+    make_set(folder, "S1-M01-L02 Ābolu stāsts")
+    make_set(folder, "S1-M01-L03", broken=True)
+    env = {**__import__("os").environ, "PYTHONIOENCODING": "cp1252"}
+    proc = subprocess.run([sys.executable, "-m", "audio_assembler", "folder", str(folder), "--format", "wav", "-q"],
+                          capture_output=True, env=env)
+    out = proc.stdout.decode("utf-8")
+    assert proc.returncode == 3, proc.stderr.decode("utf-8", "replace")
+    assert "Traceback" not in proc.stderr.decode("utf-8", "replace")
+    assert "[WARNING] S1-M01-L01" in out and "[WARNING] S1-M01-L02 Ābolu stāsts" in out
+    assert "[ERROR] S1-M01-L03" in out and "2 of 3 lesson sets saved" in out
+    assert (folder / "S1-M01-L02 Ābolu stāsts_FINAL.wav").is_file()
+    assert (folder / "S1-M01-L02 Ābolu stāsts_FINAL_report.txt").is_file()
+
+
 def test_cli_lesson_and_errors(tmp_path, capsys):
     make_set(tmp_path, "C")
     args = [str(tmp_path / "C_LV.wav"), str(tmp_path / "C_EN.wav"), str(tmp_path / "C_ORDER.csv"),
