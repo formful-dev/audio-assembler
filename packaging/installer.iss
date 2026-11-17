@@ -39,8 +39,8 @@ Name: "desktopicon"; Description: "Create a desktop shortcut"; GroupDescription:
 Source: "..\dist\Audio Assembler\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "licenses\*"; DestDir: "{app}\licenses"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\LICENSE"; DestDir: "{app}\licenses"; DestName: "Audio-Assembler-MIT.txt"; Flags: ignoreversion
-Source: "..vendorfmpeg\licenses\*"; DestDir: "{app}\licenses\FFmpeg"; Flags: ignoreversion
-Source: "..vendorfmpeg\BUILDINFO.txt"; DestDir: "{app}\licenses\FFmpeg"; Flags: ignoreversion
+Source: "..\vendor\ffmpeg\licenses\*"; DestDir: "{app}\licenses\FFmpeg"; Flags: ignoreversion
+Source: "..\vendor\ffmpeg\BUILDINFO.txt"; DestDir: "{app}\licenses\FFmpeg"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#AppName}"; Filename: "{app}\{#AppExe}"
