@@ -9,8 +9,8 @@ FFMPEG = ROOT / "vendor" / "ffmpeg"
 if not (FFMPEG / "ffmpeg.exe").is_file():
     raise SystemExit("ffmpeg is missing. Run: python packaging/get_ffmpeg.py")
 
-# ffmpeg is copied as-is (not analysed) into <app>/_internal/ffmpeg/
-datas = [(str(p), "ffmpeg") for p in FFMPEG.iterdir() if p.suffix.lower() in (".exe", ".dll")]
+# ffmpeg.exe is copied as-is (not analysed) into <app>/_internal/ffmpeg/; its licenses go in via the installer
+datas = [(str(FFMPEG / "ffmpeg.exe"), "ffmpeg")]
 datas += [(str(RES / name), "audio_assembler/gui/resources") for name in ("icon.png", "icon.ico", "icon.svg")]
 
 excludes = ["tkinter", "unittest", "pydoc_data", "test", "PIL", "pytest",

@@ -7,8 +7,9 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent
 Set-Location $root
 
+# Use the project's .venv when there is one (local builds), otherwise the current Python (CI).
 $py = Join-Path $root ".venv\Scripts\python.exe"
-if (-not (Test-Path $py)) { throw "Python environment missing. Run: python -m venv .venv; .venv\Scripts\pip install -e .[gui,dev] pyinstaller" }
+if (-not (Test-Path $py)) { $py = "python" }
 
 $version = & $py -c "import audio_assembler; print(audio_assembler.__version__)"
 Write-Host "Building Audio Assembler $version"

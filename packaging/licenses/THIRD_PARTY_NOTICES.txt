@@ -6,19 +6,18 @@ The Windows application also contains the following separate open-source compone
 Each keeps its own license. Full license texts are in this folder.
 
 
-1. FFmpeg (audio engine)
-   Files:    _internal\ffmpeg\ffmpeg.exe and the av*.dll / sw*.dll files next to it
-   Version:  n9.0.2-57-gd838f9f9ae, Windows x64, "lgpl-shared" build
-   License:  GNU Lesser General Public License, version 3 or later (LGPL-3.0.txt, GPL-3.0.txt).
-             This build contains no GPL-only or non-free parts.
-   Source:   https://git.ffmpeg.org/ffmpeg.git  (commit d838f9f9ae)
-   Build:    https://github.com/BtbN/FFmpeg-Builds  (release autobuild-2026-11-17-12-40);
-             the build scripts list every library compiled into these files, with its source.
-   Audio Assembler runs ffmpeg.exe as a separate program. You may replace the files in
-   _internal\ffmpeg with your own build of the same FFmpeg version.
-
-   The FFmpeg libraries in this build include the LAME MP3 encoder (LGPL-2.0-or-later,
-   https://lame.sourceforge.io) and other open-source libraries named in the build scripts above.
+1. FFmpeg 9.0.2 with the LAME 3.100 MP3 encoder (audio engine)
+   File:     _internal\ffmpeg\ffmpeg.exe
+   License:  FFmpeg: GNU Lesser General Public License 2.1 or later (FFmpeg\LGPL-2.1.txt,
+             FFmpeg\FFmpeg-LICENSE.md). LAME: GNU Library General Public License 2 or later
+             (FFmpeg\LAME-COPYING.txt). This build contains no GPL or non-free parts.
+   Source:   https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz
+             https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
+             Copies of both source archives, and the build script used
+             (packaging/ffmpeg/build_ffmpeg.sh), are published with every Audio Assembler release
+             at https://github.com/formful-dev/audio-assembler/releases
+   Build settings: FFmpeg\BUILDINFO.txt
+   Audio Assembler runs ffmpeg.exe as a separate program. You may replace it with your own build.
 
 2. Qt 6 and Qt for Python (PySide6, Shiboken6) 6.12.0 (window toolkit)
    Files:    _internal\PySide6\*, _internal\shiboken6\*
@@ -39,5 +38,5 @@ Each keeps its own license. Full license texts are in this folder.
              program (PyInstaller-COPYING.txt)
    Source:   https://pyinstaller.org
 
-6. Microsoft Visual C++ runtime files (vcruntime140*.dll, msvcp140*.dll)
+6. Microsoft Visual C++ runtime files (vcruntime140*.dll, msvcp140*.dll, ucrtbase.dll)
    Redistributed under the Microsoft Visual Studio redistribution terms.
